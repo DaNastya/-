@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 
 #include"kripto.h"
 using namespace std;
@@ -108,7 +108,6 @@ int main()
 		else if (num == 2) {
 
 			try {
-				int i = 0;
 				if (inf == false) {
 					if (C.size() == 0) throw "\x1b[31mВы не кодировали сообщения, выберите файл или закодируйте какое-нибудь сообщение\x1b[0m";
 					cout << "Выберите сообщение для декодирования" << endl;
@@ -120,7 +119,7 @@ int main()
 					C[i - 1]->decod(
 						cin,
 						(off == true) ? fout : cout,
-						true,
+						false,
 						(off == true) ? true : false
 					);
 					system("pause");
@@ -136,7 +135,7 @@ int main()
 						C[i]->cod(
 							fin,
 							(off == true) ? fout : cout,
-							false,
+							true,
 							(off == true) ? true : false
 						);
 						break;
@@ -145,7 +144,7 @@ int main()
 						C[i]->cod(
 							fin,
 							(off == true) ? fout : cout,
-							false,
+							true,
 							(off == true) ? true : false);
 
 						break;
