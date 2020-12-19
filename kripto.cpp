@@ -13,24 +13,24 @@ bool cripto::format(string& len)
 			if (len[i] <= 'Z' && len[i] >= 'A') len[i] = tolower(len[i]);
 			s += len[i];
 		}
-		else if (len[i] <= 'Я' && len[i] >= 'А' || len[i] <= 'я' && len[i] >= 'а') flag = false;
+		else if (len[i] <= 'Гџ' && len[i] >= 'ГЂ' || len[i] <= 'Гї' && len[i] >= 'Г ') flag = false;
 	}
 	len = s;
 	return flag;
 }
 
 
-long Enigma::mod26(long a)//циклический сдвиг
+long Enigma::mod26(long a)//С†РёРєР»РёС‡РµСЃРєРёР№ СЃРґРІРёРі
 {
 	return (a % 26 + 26) % 26;
 }
 
-int Enigma::li(char l)//возвращает код буквы от 0-25
+int Enigma::li(char l)//РІРѕР·РІСЂР°С‰Р°РµС‚ РєРѕРґ Р±СѓРєРІС‹ РѕС‚ 0-25
 {
 	return l - 'a';
 }
 
-int Enigma::indexof(char* array, int find)//вычисление индекса массива
+int Enigma::indexof(char* array, int find)//РІС‹С‡РёСЃР»РµРЅРёРµ РёРЅРґРµРєСЃР° РјР°СЃСЃРёРІР°
 {
 	return strchr(array, find) - array;
 }
@@ -39,24 +39,24 @@ void cripto::cod(istream & in, ostream & out, bool iflag, bool oflag)
 {
 	if (iflag == false)
 	{
-		cout << "Введите строку для кодирования:" << endl;//ввод строки с клавиатуры, 
-		//если пустая строка или строка содержит русские буквы, ввод заново
+		cout << "Г‚ГўГҐГ¤ГЁГІГҐ Г±ГІГ°Г®ГЄГі Г¤Г«Гї ГЄГ®Г¤ГЁГ°Г®ГўГ Г­ГЁГї:" << endl//РІРІРѕРґ СЃС‚СЂРѕРєРё СЃ РєР»Р°РІРёР°С‚СѓСЂС‹, 
+		//РµСЃР»Рё РїСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР° РёР»Рё СЃС‚СЂРѕРєР° СЃРѕРґРµСЂР¶РёС‚ СЂСѓСЃСЃРєРёРµ Р±СѓРєРІС‹, РІРІРѕРґ Р·Р°РЅРѕРІРѕ
 		in.ignore();
 		getline(in, line);
 		while (true) {
 			try {
 
-				if (!format(line)) throw "\x1b[31mСтрока содержала запрещённые символы\x1b[0m";
-				if (line == "") throw "\x1b[31mВведена пустая строка\x1b[0m";
+				if (!format(line)) throw "\x1b[31mРЎС‚СЂРѕРєР° СЃРѕРґРµСЂР¶Р°Р»Р° Р·Р°РїСЂРµС‰С‘РЅРЅС‹Рµ СЃРёРјРІРѕР»С‹Г®Г«Г»\x1b[0m";
+				if (line == "") throw "\x1b[31mР’РІРµРґРµРЅР° РїСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°\x1b[0m"
 				line = CodOrDecod(1);
-				if (oflag == false)out << "Закодированная строка: " << endl;
+				if (oflag == false)out << "Р—Р°РєРѕРґРёСЂРѕРІР°РЅРЅР°СЏ СЃС‚СЂРѕРєР°: " << endl;
 				out << line;
 				out << endl;
 				break;
 			}
 			catch (const char* a) {
 
-				cout << a << endl << "Ведите строку заново" << endl;
+				cout << a << endl << "Р’РµРґРёС‚Рµ СЃС‚СЂРѕРєСѓ Р·Р°РЅРѕРІРѕ" << endl;
 				getline(in, line);
 			}
 		}
@@ -68,10 +68,10 @@ void cripto::cod(istream & in, ostream & out, bool iflag, bool oflag)
 			{
 				try {
 					getline(in, line);
-					if (line == "") throw "\x1b[31mВведена пустая строка в файле\x1b[0m";
-					if (!format(line)) throw "\x1b[31mВ строке содержатся запрещенные символы, она кодироваться не будет\x1b[0m";
+					if (line == "") throw "\x1b[31mР’РІРµРґРµРЅР° РїСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР° РІ С„Р°Р№Р»Рµ\x1b[0m";
+					if (!format(line)) throw "\x1b[31mР’ СЃС‚СЂРѕРєРµ СЃРѕРґРµСЂР¶Р°С‚СЃСЏ Р·Р°РїСЂРµС‰РµРЅРЅС‹Рµ СЃРёРјРІРѕР»С‹, РѕРЅР° РєРѕРґРёСЂРѕРІР°С‚СЊСЃСЏ РЅРµ Р±СѓРґРµС‚\x1b[0m";
 					line = CodOrDecod(1);
-					if (oflag == false)out << "Закодированная строка: " << endl;
+					if (oflag == false)out << "Р—Р°РєРѕРґРёСЂРѕРІР°РЅРЅР°СЏ СЃС‚СЂРѕРєР°: " << endl;
 					out << line;
 					out << endl;
 				}
@@ -81,7 +81,7 @@ void cripto::cod(istream & in, ostream & out, bool iflag, bool oflag)
 				}
 			} while (!in.eof());
 		}
-		else cout << "Файл пуст\x1b[0m" << endl;
+		else cout << "Р¤Р°Р№Р» РїСѓСЃС‚" << endl;
 	}
 }
 
@@ -94,19 +94,19 @@ void cripto::decod(istream & in, ostream & out, bool iflag, bool oflag)
 				if (!in.eof()) {
 					do {
 						getline(in, line);
-						if (!format(line)) throw "\x1b[31mВ строке содержатся запрещенные символы, она кодироваться не будет\x1b[0m";
+						if (!format(line)) throw "\x1b[31mР’ СЃС‚СЂРѕРєРµ СЃРѕРґРµСЂР¶Р°С‚СЃСЏ Р·Р°РїСЂРµС‰РµРЅРЅС‹Рµ СЃРёРјРІРѕР»С‹, РѕРЅР° РєРѕРґРёСЂРѕРІР°С‚СЊСЃСЏ РЅРµ Р±СѓРґРµС‚\x1b[0m";
 						line = CodOrDecod(0);
-						if (oflag == false)out << "Декодированная строка: " << endl;
+						if (oflag == false)out << "Р”РµРєРѕРґРёСЂРѕРІР°РЅРЅР°СЏ СЃС‚СЂРѕРєР°: " << endl;
 						out << line;
 						out << endl;
 					} while (!in.eof());
 				}
-				else throw "\x1b[31mФайл пуст";
+				else throw "\x1b[31mГ”Г Г©Г« ГЇГіГ±ГІ";
 			}
 			else {
-				if (line == "0") throw "\x1b[31mСообщение для декодирования не найдено\x1b[0m";
+				if (line == "0") throw "\x1b[31mРЎРѕРѕР±С‰РµРЅРёРµ РґР»СЏ РґРµРєРѕРґРёСЂРѕРІР°РЅРёСЏ РЅРµ РЅР°Р№РґРµРЅРѕ\x1b[0m";
 				line = CodOrDecod(0);
-				cout << "Декодированная строка: " << endl;
+				cout << "Р”РµРєРѕРґРёСЂРѕРІР°РЅРЅР°СЏ СЃС‚СЂРѕРєР°: " << endl;
 				cout << line;
 				cout << endl;
 			}
@@ -125,10 +125,10 @@ void cripto::decod(istream & in, ostream & out, bool iflag, bool oflag)
 
 				try {
 					getline(in, line);
-					if (line == "") throw "\x1b[31mВведена пустая строка в файле\x1b[0m";
-					if (!format(line)) throw "\x1b[31mВ строке содержатся запрещенные символы, она кодироваться не будет\x1b[0m";
+					if (line == "") throw "\x1b[31mР’РІРµРґРµРЅР° РїСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР° РІ С„Р°Р№Р»Рµ\x1b[0m";
+					if (!format(line)) throw "\x1b[31mР’ СЃС‚СЂРѕРєРµ СЃРѕРґРµСЂР¶Р°С‚СЃСЏ Р·Р°РїСЂРµС‰РµРЅРЅС‹Рµ СЃРёРјРІРѕР»С‹, РѕРЅР° РєРѕРґРёСЂРѕРІР°С‚СЊСЃСЏ РЅРµ Р±СѓРґРµС‚\x1b[0m";
 					line = CodOrDecod(0);
-					if (oflag == false)out << "Закодированная строка: " << endl;
+					if (oflag == false)out << "Р—Р°РєРѕРґРёСЂРѕРІР°РЅРЅР°СЏ СЃС‚СЂРѕРєР°: " << endl;
 					out << line;
 					out << endl;
 				}
@@ -138,14 +138,14 @@ void cripto::decod(istream & in, ostream & out, bool iflag, bool oflag)
 				}
 			} while (!in.eof());
 		}
-		else cout << "\x1b[31mФайл пуст\x1b[0m" << endl;
+		else cout << "\x1b[31mР¤Р°Р№Р» РїСѓСЃС‚\x1b[0m" << endl;
 
 	}
 }
 
 string& Ceasar::CaesarCodOrDecod(int shift)
 {
-	unsigned char code; //вводится переменная с возможным значением 0-255 для того, чтобы смещение не приводило к ситуации, когда символ больше 127
+	unsigned char code; //РІРІРѕРґРёС‚СЃСЏ РїРµСЂРµРјРµРЅРЅР°СЏ СЃ РІРѕР·РјРѕР¶РЅС‹Рј Р·РЅР°С‡РµРЅРёРµРј 0-255 РґР»СЏ С‚РѕРіРѕ, С‡С‚РѕР±С‹ СЃРјРµС‰РµРЅРёРµ РЅРµ РїСЂРёРІРѕРґРёР»Рѕ Рє СЃРёС‚СѓР°С†РёРё, РєРѕРіРґР° СЃРёРјРІРѕР» Р±РѕР»СЊС€Рµ 127
 	for (size_t i = 0; i < line.size(); i++) {
 		if (line[i] <= 'z' && line[i] >= 'a') {
 			code = line[i] + (shift % 26);
@@ -160,12 +160,12 @@ string& Ceasar::CaesarCodOrDecod(int shift)
 string & Ceasar::CodOrDecod(int flag)
 {
 	
-	cout << "введите сдвиг" << endl << "->";
+	cout << "РІРІРµРґРёС‚Рµ СЃРґРІРёРі" << endl << "->";
 	while (!(cin >> shift))
 	{
 		cin.clear();
 		while (cin.get() != '\n');
-		cout << "\x1b[31mНекорректный сдвиг\x1b[0m" << endl;
+		cout << "\x1b[31mРќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ СЃРґРІРёРі\x1b[0m" << endl;
 	}
 	if (flag == 1) {
 		return (CaesarCodOrDecod(shift));
@@ -190,13 +190,13 @@ string& Vishner::VishnerCodOrDecod(int flag)
 
 string & Vishner::CodOrDecod(int flag)
 {
-	cout << "Введите кодовое слово" << endl;
+	cout << "Р’РІРµРґРёС‚Рµ РєРѕРґРѕРІРѕРµ СЃР»РѕРІРѕ" << endl;
 	cin.ignore();
 	getline(cin, code);
 	while (true) {
 		try {
-			if (!format(code)) throw "\x1b[31mКодовое слово содержит запрещенные символы\x1b[0m";
-			if (line.size() < code.size()) throw "\x1b[31mКодовое слово больше длины сообщения\x1b[0m";
+			if (!format(code)) throw "\x1b[31mРљРѕРґРѕРІРѕРµ СЃР»РѕРІРѕ СЃРѕРґРµСЂР¶РёС‚ Р·Р°РїСЂРµС‰РµРЅРЅС‹Рµ СЃРёРјРІРѕР»С‹\x1b[0m";
+			if (line.size() < code.size()) throw "\x1b[31mРљРѕРґРѕРІРѕРµ СЃР»РѕРІРѕ Р±РѕР»СЊС€Рµ РґР»РёРЅС‹ СЃРѕРѕР±С‰РµРЅРёСЏ\x1b[0m";
 			getKey();
 			if (flag == 1) {
 				return (VishnerCodOrDecod(1));
@@ -205,7 +205,7 @@ string & Vishner::CodOrDecod(int flag)
 
 		}
 		catch (const char* error) {
-			cout << error << endl << "Введите новое кодовое слово" << endl;
+			cout << error << endl << "Р’РІРµРґРёС‚Рµ РЅРѕРІРѕРµ РєРѕРґРѕРІРѕРµ СЃР»РѕРІРѕ" << endl;
 			getline(cin, code);
 		}
 	}
@@ -216,7 +216,7 @@ string & Vishner::getKey()
 {
 	key = line;
 	int size = code.size();
-	for (size_t k = 0; k < line.size(); k++) {//делаем ключ
+	for (size_t k = 0; k < line.size(); k++) {//РґРµР»Р°РµРј РєР»СЋС‡
 		key[k] = code[k % size];
 	}
 	return key;
@@ -233,7 +233,7 @@ string& Enigma::EnigmaCodOrDecod()
 	};
 	char reflector[] = "yruhqsldpxngokmiebfzcwvjat";
 	char key[] = "cuq";
-	//присваивание начальных значений роторам (код буквы от 0-25)
+	//РїСЂРёСЃРІР°РёРІР°РЅРёРµ РЅР°С‡Р°Р»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№ СЂРѕС‚РѕСЂР°Рј (РєРѕРґ Р±СѓРєРІС‹ РѕС‚ 0-25)
 	int L = li(key[0]);
 	int M = li(key[1]);
 	int R = li(key[2]);
@@ -242,23 +242,23 @@ string& Enigma::EnigmaCodOrDecod()
 
 	for (unsigned int x = 0; x < line.size(); x++) {
 		int ct_letter = li(line[x]);
-		/*повороты роторов*/
-		R = mod26(R + 1);//правый ротор
-		if (R == li(key[2])) M = mod26(M + 1);//если правый повернулся полностью, повернуть центральный 
-		if (M == li(key[1])) L = mod26(L + 1);//если центральный полностью повернулся, повернуть левый
-		/*вход в машину*/
-		char a = rotors[2][mod26(R + ct_letter)];//правый ротор
-		char b = rotors[1][mod26(M + li(a) - R)];//центральный ротор
-		char c = rotors[0][mod26(L + li(b) - M)];//левый ротор
+		/*РїРѕРІРѕСЂРѕС‚С‹ СЂРѕС‚РѕСЂРѕРІ*/
+		R = mod26(R + 1);//РїСЂР°РІС‹Р№ СЂРѕС‚РѕСЂ
+		if (R == li(key[2])) M = mod26(M + 1);//РµСЃР»Рё РїСЂР°РІС‹Р№ РїРѕРІРµСЂРЅСѓР»СЃСЏ РїРѕР»РЅРѕСЃС‚СЊСЋ, РїРѕРІРµСЂРЅСѓС‚СЊ С†РµРЅС‚СЂР°Р»СЊРЅС‹Р№ 
+		if (M == li(key[1])) L = mod26(L + 1);//РµСЃР»Рё С†РµРЅС‚СЂР°Р»СЊРЅС‹Р№ РїРѕР»РЅРѕСЃС‚СЊСЋ РїРѕРІРµСЂРЅСѓР»СЃСЏ, РїРѕРІРµСЂРЅСѓС‚СЊ Р»РµРІС‹Р№
+		/*РІС…РѕРґ РІ РјР°С€РёРЅСѓ*/
+		char a = rotors[2][mod26(R + ct_letter)];//РїСЂР°РІС‹Р№ СЂРѕС‚РѕСЂ
+		char b = rotors[1][mod26(M + li(a) - R)];//С†РµРЅС‚СЂР°Р»СЊРЅС‹Р№ СЂРѕС‚РѕСЂ
+		char c = rotors[0][mod26(L + li(b) - M)];//Р»РµРІС‹Р№ СЂРѕС‚РѕСЂ
 
-		char ref = reflector[mod26(li(c) - L)];//рефлектор
-		/*обратный путь*/
+		char ref = reflector[mod26(li(c) - L)];//СЂРµС„Р»РµРєС‚РѕСЂ
+		/*РѕР±СЂР°С‚РЅС‹Р№ РїСѓС‚СЊ*/
 
-		int d = mod26(indexof(rotors[0], alpha[mod26(li(ref) + L)]) - L);//левый
-		int e = mod26(indexof(rotors[1], alpha[mod26(d + M)]) - M);//центр 
-		char f = alpha[mod26(indexof(rotors[2], alpha[mod26(e + R)]) - R)];//правый (в массиве, где алфавит выбирает получившуюся букву)
+		int d = mod26(indexof(rotors[0], alpha[mod26(li(ref) + L)]) - L);//Р»РµРІС‹Р№
+		int e = mod26(indexof(rotors[1], alpha[mod26(d + M)]) - M);//С†РµРЅС‚СЂ 
+		char f = alpha[mod26(indexof(rotors[2], alpha[mod26(e + R)]) - R)];//РїСЂР°РІС‹Р№ (РІ РјР°СЃСЃРёРІРµ, РіРґРµ Р°Р»С„Р°РІРёС‚ РІС‹Р±РёСЂР°РµС‚ РїРѕР»СѓС‡РёРІС€СѓСЋСЃСЏ Р±СѓРєРІСѓ)
 
-		output += f;//цапись закодированной буквы в выходную строку
+		output += f;//С†Р°РїРёСЃСЊ Р·Р°РєРѕРґРёСЂРѕРІР°РЅРЅРѕР№ Р±СѓРєРІС‹ РІ РІС‹С…РѕРґРЅСѓСЋ СЃС‚СЂРѕРєСѓ
 	}
 	line = output;
 	return line;
@@ -268,4 +268,6 @@ string & Enigma::CodOrDecod(int flag)
 {
 	return (EnigmaCodOrDecod());
 }
+
+
 
