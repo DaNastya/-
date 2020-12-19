@@ -10,7 +10,7 @@ using namespace std;
 bool formatname(string &len);
 string initName(string& name);
 //void printvec(vector<cripto> &c);
-class cripto //класс направлен на объединение всех методов по кодированию и декодированию 
+class //РєР»Р°СЃСЃ РЅР°РїСЂР°РІР»РµРЅ РЅР° РѕР±СЉРµРґРёРЅРµРЅРёРµ РІСЃРµС… РјРµС‚РѕРґРѕРІ РїРѕ РєРѕРґРёСЂРѕРІР°РЅРёСЋ Рё РґРµРєРѕРґРёСЂРѕРІР°РЅРёСЋ 
 {
 protected:
 	string line;
@@ -31,7 +31,7 @@ class Ceasar : public cripto
 public:
 	Ceasar() { line = "0";	
 	}
-	string& CodOrDecod(int flag)override;//переделать исключения
+	string& CodOrDecod(int flag)override;
 	
 
 };
