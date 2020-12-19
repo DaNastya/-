@@ -15,12 +15,11 @@ bool formatname(string &len)
 }
 string initName(string& name)
 {
-	cout << "Выберите формат файла: " << endl;
+	cout << "Р’С‹Р±РµСЂРёС‚Рµ С„РѕСЂРјР°С‚ С„Р°Р№Р»Р°: " << endl;
 	cout << "|1| - .txt;" << endl;
 	cout << "|2| - .doc;" << endl;
 	cout << "|3| - .rtf;" << endl;
 	int ans = 0;
-	//место для исключительной ситуации
 	cin >> ans;
 	switch (ans)
 	{
@@ -36,10 +35,3 @@ string initName(string& name)
 	}
 
 }
-//template <class T>
-//void printvec(vector<T> &c) {
-//
-//	for (int i = 0; i < c.size(); i++) {
-//		cout << i + 1 << " " << c[i].getlen() << endl;
-//	}
-//}
