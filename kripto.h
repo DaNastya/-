@@ -9,58 +9,55 @@
 using namespace std;
 bool formatname(string &len);
 string initName(string& name);
-//void printvec(vector<cripto> &c);
-class //класс направлен на объединение всех методов по кодированию и декодированию 
+class cripto //класс направлен на объединение всех методов по кодированию и декодированию 
 {
 protected:
-	string line;
+	vector<string> line;
 	bool format(string& len);
-	cripto() { line = "0"; }
+	cripto() {
+	}
 public:
-	virtual string& CodOrDecod(int flag) = 0;
-	void cod(istream& in, ostream& out, bool iflag, bool oflag);
-	void decod(istream& in, ostream& out, bool iflag, bool oflag);
-	string getlen() { return line; }
+	virtual vector<string>& CodOrDecod(int flag) = 0;//виртуальная функция
+	void cod(istream& in, bool iflag, bool oflag);
+	void decod(istream& in, bool iflag, bool oflag);
+	void getlen();
+	void recording(ostream& out);//запись в файлы
 };
 
 class Ceasar : public cripto
 {
 	int shift = 0;
-	string& CaesarCodOrDecod(int shift);
+	vector<string>& CaesarCodOrDecod(int shift);
 
 public:
-	Ceasar() { line = "0";	
+	Ceasar():cripto() { 	
 	}
-	string& CodOrDecod(int flag)override;
-	
-
+	vector<string>& CodOrDecod(int flag)override;
 };
 class Vishner : public cripto
 {
-	string key;
+	vector<string> key;
 	string code;
-	string& VishnerCodOrDecod(int flag);
+	vector<string>& VishnerCodOrDecod(int flag);
 public:
-	Vishner() { line = "0";
-	code = "0";
-	key = "0";
+	Vishner() :cripto() {
+		code = "0";
 	}
-	string& CodOrDecod(int flag)override;
+	vector<string>& CodOrDecod(int flag)override;
 
-	string& getKey();
+	vector<string>& getKey();
 
 };
 
 class Enigma : public cripto
 {
-	string code;
-	string& EnigmaCodOrDecod();
+	vector<string>& EnigmaCodOrDecod();
 	long mod26(long a);
 	int li(char l);
 	int indexof(char* array, int find);
 public:
-	Enigma() { line = "0"; }
-	string& CodOrDecod(int flag)override;
+	Enigma() :cripto() { }
+	vector<string>& CodOrDecod(int flag)override;
 	
 
 };
