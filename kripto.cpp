@@ -33,26 +33,24 @@ int Enigma::indexof(char* array, int find)//вычисление индекса 
 	return strchr(array, find) - array;
 }
 
-void cripto::cod(istream & in, ostream & out, bool iflag, bool oflag)
+void cripto::cod(istream & in,  bool iflag, bool oflag)
 {
 	int code = 0;
 	string LINE;
 	if (iflag == false)
 	{
 		cout << "Введите строку для кодирования:" << endl;//ввод строки с клавиатуры,
-		cin.ignore();
-		getline(cin, LINE);
+		in.ignore();
+		getline(in, LINE);
 		while (true) {
 			try {
 		//если пустая строка или строка содержит русские буквы, ввод заново
-					
 			
-					if (!format(LINE)) throw "Строка содержала запрещённые символы";
-					if (LINE == "") throw "\x1b[31mВведена пустая строка\x1b[0m";
+					if (!format(LINE)) throw "\x1b[31mСтрока содержала запрещённые символы\x1b[0m";
+					if (LINE.size()==0) throw "\x1b[31mСтрока пустая\x1b[0m";
 					line.push_back(LINE);
 					cout << "Нажмите 'esc', чтобы закончить ввод" << endl;
 					code = _getch();
-
 					if (code == 27) {
 						line = CodOrDecod(1);
 						for (int j = 0; j < line.size(); j++) {
@@ -65,15 +63,6 @@ void cripto::cod(istream & in, ostream & out, bool iflag, bool oflag)
 						cout << "Введите строку для кодирования:" << endl;//ввод строки с клавиатуры, 
 						getline(cin, LINE);
 					}
-				
-		
-	
-			/*	
-				if (oflag == false)out << "Закодированная строка: " << endl;
-				out << line;
-				out << endl;
-				break;*/
-
 
 			}
 
@@ -92,86 +81,92 @@ void cripto::cod(istream & in, ostream & out, bool iflag, bool oflag)
 				try {
 					
 						getline(in, LINE);
-						if (LINE == "") throw "\x1b[31mВведена пустая строка в файле\x1b[0m";
-						if (!format(LINE)) throw "\x1b[31mВ строке содержатся запрещенные символы, она кодироваться не будет\x1b[0m";
+						if (LINE == "") throw "\x1b[31mВ файле есть пустая строка\x1b[0m";
+						if (!format(LINE)) throw "\x1b[31mСтрока содержит кирилицу\x1b[0m";
 						line.push_back(LINE);
-						/*if (oflag == false)out << "Закодированная строка: " << endl;*/
-						/*cout << line[i] << endl;*/
-						line = CodOrDecod(1);
-						for (int j = 0; j < line.size(); j++) {
 						
-						cout << line[j] << endl;
-						}
-					/*	out << endl;*/
-					
 				}
 				catch (const char* error) {
 					cout << error << endl;
 
 				}
+				
 			} while (!in.eof());
+			line = CodOrDecod(1);
+			for (int j = 0; j < line.size(); j++) {
+				cout << line[j] << endl;
+			}
 		}
 		else cout << "\x1b[31mФайл пуст\x1b[0m" << endl;
 	}
 }
 
-//void cripto::decod(istream & in, ostream & out, bool iflag, bool oflag)
-//{
-//	if (oflag == false)
-//	{
-//		try {
-//			if (iflag == true) {
-//				if (!in.eof()) {
-//					do {
-//						getline(in, line);
-//						if (!format(line)) throw "\x1b[31mВ строке содержатся запрещенные символы, она кодироваться не будет\x1b[0m";
-//						line = CodOrDecod(0);
-//						if (oflag == false)out << "Декодированная строка: " << endl;
-//						out << line;
-//						out << endl;
-//					} while (!in.eof());
-//				}
-//				else throw "\x1b[31mФайл пуст";
-//			}
-//			else {
-//				if (line == "0") throw "\x1b[31mСообщение для декодирования не найдено\x1b[0m";
-//				line = CodOrDecod(0);
-//				cout << "Декодированная строка: " << endl;
-//				cout << line;
-//				cout << endl;
-//			}
-//		}
-//		catch (const char* error) {
-//			cout << error << endl;
-//
-//		}
-//
-//	}
-//	else
-//	{
-//		if (!in.eof()) {
-//			do
-//			{
-//
-//				try {
-//					getline(in, line);
-//					if (line == "") throw "\x1b[31mВведена пустая строка в файле\x1b[0m";
-//					if (!format(line)) throw "\x1b[31mВ строке содержатся запрещенные символы, она кодироваться не будет\x1b[0m";
-//					line = CodOrDecod(0);
-//					if (oflag == false)out << "Закодированная строка: " << endl;
-//					out << line;
-//					out << endl;
-//				}
-//				catch (const char* error) {
-//					cout << error << endl;
-//
-//				}
-//			} while (!in.eof());
-//		}
-//		else cout << "\x1b[31mФайл пуст\x1b[0m" << endl;
-//
-//	}
-//}
+void cripto::decod(istream & in,  bool iflag, bool oflag)
+{
+	string LINE;
+	if (oflag == false)
+	{
+		try {
+			if (iflag == true) {
+				if (!in.eof()) {
+					do {
+						getline(in, LINE);
+						if (!format(LINE)) throw "\x1b[31mСтрока содержит кирилицу\x1b[0m";
+						line.push_back(LINE);
+					} while (!in.eof());
+					line = CodOrDecod(0);
+				}
+				else throw "\x1b[31mФайл пуст";
+			}
+			else {
+				line = CodOrDecod(0);
+				cout << "Декодированная строка: " << endl;
+				for (int j = 0; j < line.size(); j++) {
+					cout << line[j] << endl;
+				}
+			}
+		}
+		catch (const char* error) {
+			cout << error << endl;
+
+		}
+	}
+	else
+	{
+		if (!in.eof()) {
+			do
+			{
+
+				try {
+					getline(in, LINE);
+					if (LINE == "") throw "\x1b[31mВ файле пустая строка\x1b[0m";
+					if (!format(LINE)) throw "\x1b[31mСтрока содержит кирилицу\x1b[0m";
+					line.push_back(LINE);
+				}
+				catch (const char* error) {
+					cout << error << endl;
+
+				}
+				CodOrDecod(0);
+			} while (!in.eof());
+		}
+		else cout << "\x1b[31mФайл пуст\x1b[0m" << endl;
+
+	}
+}
+
+void cripto::getlen()
+{
+	for (int i = 0; i < line.size(); i++) {
+		cout << line[i] << endl;
+	}
+}
+
+void cripto::recording(ostream & out)
+{
+	for (int i = 0; i < line.size(); i++)
+			out << line[i] << "\n";
+}
 
 vector<string>& Ceasar::CaesarCodOrDecod(int shift)
 {
@@ -192,7 +187,7 @@ vector<string>& Ceasar::CaesarCodOrDecod(int shift)
 vector<string> & Ceasar::CodOrDecod(int flag)
 {
 	
-	cout << "введите сдвиг" << endl << "->";
+	cout << "Введите сдвиг" << endl << "->";
 	while (!(cin >> shift))
 	{
 		cin.clear();
@@ -225,12 +220,10 @@ vector<string>& Vishner::VishnerCodOrDecod(int flag)
 vector<string> & Vishner::CodOrDecod(int flag)
 {
 	cout << "Введите кодовое слово" << endl;
-	cin.ignore();
-	getline(cin, code);
+	cin >> code;
 	while (true) {
 		try {
 			if (!format(code)) throw "\x1b[31mКодовое слово содержит запрещенные символы\x1b[0m";
-			if (line.size() < code.size()) throw "\x1b[31mКодовое слово больше длины сообщения\x1b[0m";
 			getKey();
 			if (flag == 1) {
 				return (VishnerCodOrDecod(1));
@@ -240,7 +233,7 @@ vector<string> & Vishner::CodOrDecod(int flag)
 		}
 		catch (const char* error) {
 			cout << error << endl << "Введите новое кодовое слово" << endl;
-			getline(cin, code);
+			cin >> code;
 		}
 	}
 
@@ -250,8 +243,12 @@ vector<string> & Vishner::getKey()
 {
 	key = line;
 	int size = code.size();
-	for (size_t k = 0; k < line[k].size(); k++) {//делаем ключ
-		key[k] = code[k % size];
+	for (size_t i = 0; i < line.size(); i++) {//делаем ключ
+		for (size_t j = 0,k=0; j < line[i].size(); j++) {
+			key[i][j]=code[k];
+			if (k != size - 1) k++;
+			else k = 0;
+		}
 	}
 	return key;
 }
@@ -300,7 +297,6 @@ vector<string>& Enigma::EnigmaCodOrDecod()
 	
 	return line;
 }
-
 vector<string> & Enigma::CodOrDecod(int flag)
 {
 	return (EnigmaCodOrDecod());
